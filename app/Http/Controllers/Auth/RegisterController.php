@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Validator;
 use Pterodactyl\Rules\Username;
 use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Services\Users\UserCreationService;
+use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
+use Pterodactyl\Support\PanelAccess;
 
 class RegisterController extends AbstractLoginController
 {
-    public function __construct(private UserCreationService $creationService)
+    public function __construct(private UserCreationService $creationService, private SettingsRepositoryInterface $settings)
     {
         parent::__construct();
     }
@@ -28,6 +30,10 @@ class RegisterController extends AbstractLoginController
      */
     public function register(Request $request): JsonResponse
     {
+        if (!PanelAccess::isEnabled($this->settings, 'signup')) {
+            throw new DisplayException('Account registration is currently disabled by the administrator.');
+        }
+
         $validator = Validator::make($request->all(), [
             'email' => 'required|email:strict|between:1,191|unique:users,email',
             'username' => ['required', 'between:1,191', 'unique:users,username', new Username()],

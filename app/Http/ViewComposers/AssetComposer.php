@@ -6,6 +6,7 @@ use Illuminate\View\View;
 use Pterodactyl\Support\ThemeColorGenerator;
 use Pterodactyl\Services\Helpers\AssetHashService;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
+use Pterodactyl\Support\PanelAccess;
 
 class AssetComposer
 {
@@ -31,6 +32,11 @@ class AssetComposer
                 'enabled' => config('recaptcha.enabled', false),
                 'siteKey' => config('recaptcha.website_key') ?? '',
             ],
+            'auth' => [
+                'loginEnabled' => PanelAccess::isEnabled($this->settings, 'login'),
+                'signupEnabled' => PanelAccess::isEnabled($this->settings, 'signup'),
+            ],
+            'pages' => PanelAccess::all($this->settings),
         ]);
         $view->with('themeVariables', $this->themeVariables());
     }

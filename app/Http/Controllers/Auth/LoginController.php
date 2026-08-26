@@ -10,9 +10,16 @@ use Illuminate\Http\JsonResponse;
 use Pterodactyl\Facades\Activity;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
+use Pterodactyl\Support\PanelAccess;
 
 class LoginController extends AbstractLoginController
 {
+    public function __construct(private SettingsRepositoryInterface $settings)
+    {
+        parent::__construct();
+    }
+
     /**
      * Handle all incoming requests for the authentication routes and render the
      * base authentication view component. React will take over at this point and
@@ -31,6 +38,10 @@ class LoginController extends AbstractLoginController
      */
     public function login(Request $request): JsonResponse
     {
+        if (!PanelAccess::isEnabled($this->settings, 'login')) {
+            throw new \Pterodactyl\Exceptions\DisplayException('Login is currently disabled by the administrator.');
+        }
+
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
             $this->sendLockoutResponse($request);

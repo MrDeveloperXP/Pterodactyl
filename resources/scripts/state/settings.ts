@@ -7,6 +7,11 @@ export interface SiteSettings {
         enabled: boolean;
         siteKey: string;
     };
+    auth: {
+        loginEnabled: boolean;
+        signupEnabled: boolean;
+    };
+    pages: Record<string, boolean>;
 }
 
 export interface SettingsStore {

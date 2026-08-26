@@ -10,6 +10,7 @@
                     <li @if($activeTab === 'mail')class="active"@endif><a href="{{ route('admin.settings.mail') }}">Mail</a></li>
                     <li @if($activeTab === 'theme')class="active"@endif><a href="{{ route('admin.settings.theme') }}">Theme</a></li>
                     <li @if($activeTab === 'advanced')class="active"@endif><a href="{{ route('admin.settings.advanced') }}">Advanced</a></li>
+                    <li @if($activeTab === 'access')class="active"@endif><a href="{{ route('admin.settings.access') }}">Access</a></li>
                 </ul>
             </div>
         </div>

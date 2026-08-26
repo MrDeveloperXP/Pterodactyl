@@ -10,9 +10,11 @@ import { useLocation } from 'react-router';
 import Spinner from '@/components/elements/Spinner';
 import routes from '@/routers/routes';
 import tw from 'twin.macro';
+import { useStoreState } from 'easy-peasy';
 
 export default () => {
     const location = useLocation();
+    const pages = useStoreState((state: any) => state.settings.data!.pages);
 
     return (
         <>
@@ -21,16 +23,16 @@ export default () => {
                 <TransitionRouter>
                     <React.Suspense fallback={<Spinner centered />}>
                         <Switch location={location}>
-                            <Route path={'/'} exact>
+                            {pages.dashboard && <Route path={'/'} exact>
                                 <DashboardHomeContainer />
-                            </Route>
-                            <Route path={'/servers'} exact>
+                            </Route>}
+                            {pages.servers && <Route path={'/servers'} exact>
                                 <MyServersContainer />
-                            </Route>
-                            <Route path={'/store'} exact>
+                            </Route>}
+                            {pages.store && <Route path={'/store'} exact>
                                 <AvailableServersContainer />
-                            </Route>
-                            {routes.account.map(({ path, component: Component }) => (
+                            </Route>}
+                            {routes.account.filter(({ accessKey }) => !accessKey || pages[accessKey] !== false).map(({ path, component: Component }) => (
                                 <Route key={path} path={`/account/${path}`.replace('//', '/')} exact>
                                     <Component />
                                 </Route>

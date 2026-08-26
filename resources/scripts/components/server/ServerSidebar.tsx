@@ -103,6 +103,7 @@ interface Route {
 
 export default ({ routes, to }: { routes: Route[]; to: (value: string, url?: boolean) => string }) => {
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
+    const pages = useStoreState((state: ApplicationStore) => state.settings.data!.pages);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -158,7 +159,7 @@ export default ({ routes, to }: { routes: Route[]; to: (value: string, url?: boo
 
                 <Nav>
                     {routes
-                        .filter((route) => !!route.name)
+                        .filter((route) => !!route.name && (!route.accessKey || pages[route.accessKey] !== false))
                         .map((route) =>
                             route.permission ? (
                                 <Can key={route.path} action={route.permission} matchAny>

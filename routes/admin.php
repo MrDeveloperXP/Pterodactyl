@@ -123,6 +123,7 @@ Route::group(['prefix' => 'settings'], function () {
     Route::get('/', [Admin\Settings\IndexController::class, 'index'])->name('admin.settings');
     Route::get('/mail', [Admin\Settings\MailController::class, 'index'])->name('admin.settings.mail');
     Route::get('/advanced', [Admin\Settings\AdvancedController::class, 'index'])->name('admin.settings.advanced');
+    Route::get('/access', [Admin\Settings\AccessController::class, 'index'])->name('admin.settings.access');
     Route::get('/theme', [Admin\Settings\ThemeController::class, 'index'])->name('admin.settings.theme');
 
     Route::post('/mail/test', [Admin\Settings\MailController::class, 'test'])->name('admin.settings.mail.test');
@@ -131,6 +132,7 @@ Route::group(['prefix' => 'settings'], function () {
     Route::patch('/', [Admin\Settings\IndexController::class, 'update']);
     Route::patch('/mail', [Admin\Settings\MailController::class, 'update']);
     Route::patch('/advanced', [Admin\Settings\AdvancedController::class, 'update']);
+    Route::patch('/access', [Admin\Settings\AccessController::class, 'update'])->name('admin.settings.access.update');
 });
 
 /*

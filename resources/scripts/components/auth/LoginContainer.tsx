@@ -22,6 +22,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { enabled: recaptchaEnabled, siteKey } = useStoreState((state) => state.settings.data!.recaptcha);
+    const signupEnabled = useStoreState((state) => state.settings.data!.auth.signupEnabled);
 
     useEffect(() => {
         clearFlashes();
@@ -107,14 +108,14 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                             Forgot password?
                         </Link>
                     </div>
-                    <div css={tw`mt-4 text-center`}>
+                    {signupEnabled && <div css={tw`mt-4 text-center`}>
                         <Link
                             to={'/auth/register'}
                             css={tw`text-xs text-neutral-500 tracking-wide no-underline uppercase hover:text-neutral-600`}
                         >
                             Don't have an account? Register
                         </Link>
-                    </div>
+                    </div>}
                 </LoginFormContainer>
             )}
         </Formik>

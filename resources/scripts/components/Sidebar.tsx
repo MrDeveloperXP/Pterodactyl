@@ -74,6 +74,7 @@ const ACCOUNT_ICONS: Record<string, any> = {
 export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
+    const pages = useStoreState((state: ApplicationStore) => state.settings.data!.pages);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -118,22 +119,22 @@ export default () => {
                 </div>
 
                 <nav css={tw`flex-1 flex flex-col gap-1 mt-2`}>
-                    <NavItem to={'/'} exact onClick={() => setMobileOpen(false)}>
+                    {pages.dashboard && <NavItem to={'/'} exact onClick={() => setMobileOpen(false)}>
                         <FontAwesomeIcon icon={faTachometerAlt} css={tw`w-4`} />
                         Dashboard
-                    </NavItem>
-                    <NavItem to={'/servers'} onClick={() => setMobileOpen(false)}>
+                    </NavItem>}
+                    {pages.servers && <NavItem to={'/servers'} onClick={() => setMobileOpen(false)}>
                         <FontAwesomeIcon icon={faServer} css={tw`w-4`} />
                         My Servers
-                    </NavItem>
-                    <NavItem to={'/store'} onClick={() => setMobileOpen(false)}>
+                    </NavItem>}
+                    {pages.store && <NavItem to={'/store'} onClick={() => setMobileOpen(false)}>
                         <FontAwesomeIcon icon={faShoppingCart} css={tw`w-4`} />
                         Available Servers
-                    </NavItem>
+                    </NavItem>}
 
                     <p css={tw`text-xs uppercase tracking-wide text-neutral-500 px-4 mt-4 mb-1`}>Account</p>
                     {routes.account
-                        .filter((route) => !!route.name)
+                        .filter((route) => !!route.name && (!route.accessKey || pages[route.accessKey] !== false))
                         .map((route) => (
                             <NavItem
                                 key={route.path}

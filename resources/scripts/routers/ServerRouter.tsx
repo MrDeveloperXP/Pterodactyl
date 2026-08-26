@@ -22,6 +22,7 @@ export default () => {
     const location = useLocation();
 
     const rootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
+    const pages = useStoreState((state: any) => state.settings.data!.pages);
     const [error, setError] = useState('');
 
     const id = ServerContext.useStoreState((state) => state.server.data?.id);
@@ -59,7 +60,7 @@ export default () => {
 
     return (
         <React.Fragment key={'server-router'}>
-            <ServerSidebar routes={routes.server} to={to} />
+            <ServerSidebar routes={routes.server.filter(({ accessKey }) => !accessKey || pages[accessKey] !== false)} to={to} />
             <div css={tw`lg:ml-[21rem] mr-4 pt-20 lg:pt-4 pb-4`}>
                 {!uuid || !id ? (
                     error ? (
@@ -79,7 +80,7 @@ export default () => {
                             <ErrorBoundary>
                                 <TransitionRouter>
                                     <Switch location={location}>
-                                        {routes.server.map(({ path, permission, component: Component }) => (
+                                        {routes.server.filter(({ accessKey }) => !accessKey || pages[accessKey] !== false).map(({ path, permission, component: Component }) => (
                                             <PermissionRoute key={path} permission={permission} path={to(path)} exact>
                                                 <Spinner.Suspense>
                                                     <Component />

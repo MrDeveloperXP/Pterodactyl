@@ -8,6 +8,7 @@ import Field from '@/components/elements/Field';
 import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import useFlash from '@/plugins/useFlash';
+import { useStoreState } from 'easy-peasy';
 
 interface Values {
     email: string;
@@ -19,11 +20,15 @@ interface Values {
 }
 
 const RegisterContainer = ({ history }: RouteComponentProps) => {
+    const signupEnabled = useStoreState((state) => state.settings.data!.auth.signupEnabled);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
 
     useEffect(() => {
         clearFlashes();
-    }, []);
+        if (!signupEnabled) history.replace('/auth/login');
+    }, [signupEnabled]);
+
+    if (!signupEnabled) return null;
 
     const onSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes();

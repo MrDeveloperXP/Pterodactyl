@@ -30,10 +30,12 @@ interface RouteDefinition {
     name: string | undefined;
     component: React.ComponentType;
     exact?: boolean;
+    accessKey?: string;
 }
 
 interface ServerRouteDefinition extends RouteDefinition {
     permission: string | string[] | null;
+    accessKey?: string;
 }
 
 interface Routes {
@@ -48,27 +50,32 @@ export default {
         {
             path: '/',
             name: 'Account',
+            accessKey: 'account',
             component: AccountOverviewContainer,
             exact: true,
         },
         {
             path: '/api',
             name: 'API Credentials',
+            accessKey: 'account_api',
             component: AccountApiContainer,
         },
         {
             path: '/ssh',
             name: 'SSH Keys',
+            accessKey: 'account_ssh',
             component: AccountSSHContainer,
         },
         {
             path: '/activity',
             name: 'Activity',
+            accessKey: 'account_activity',
             component: ActivityLogContainer,
         },
         {
             path: '/wallet',
             name: 'Wallet',
+            accessKey: 'account_wallet',
             component: WalletContainer,
         },
     ],
@@ -77,6 +84,7 @@ export default {
             path: '/',
             permission: null,
             name: 'Console',
+            accessKey: 'server_console',
             component: ServerConsole,
             exact: true,
         },
@@ -84,10 +92,12 @@ export default {
             path: '/files',
             permission: 'file.*',
             name: 'Files',
+            accessKey: 'server_files',
             component: FileManagerContainer,
         },
         {
             path: '/files/:action(edit|new)',
+            accessKey: 'server_files',
             permission: 'file.*',
             name: undefined,
             component: FileEditContainer,
@@ -96,16 +106,19 @@ export default {
             path: '/databases',
             permission: 'database.*',
             name: 'Databases',
+            accessKey: 'server_databases',
             component: DatabasesContainer,
         },
         {
             path: '/schedules',
             permission: 'schedule.*',
             name: 'Schedules',
+            accessKey: 'server_schedules',
             component: ScheduleContainer,
         },
         {
             path: '/schedules/:id',
+            accessKey: 'server_schedules',
             permission: 'schedule.*',
             name: undefined,
             component: ScheduleEditContainer,
@@ -114,36 +127,42 @@ export default {
             path: '/users',
             permission: 'user.*',
             name: 'Users',
+            accessKey: 'server_users',
             component: UsersContainer,
         },
         {
             path: '/backups',
             permission: 'backup.*',
             name: 'Backups',
+            accessKey: 'server_backups',
             component: BackupContainer,
         },
         {
             path: '/network',
             permission: 'allocation.*',
             name: 'Network',
+            accessKey: 'server_network',
             component: NetworkContainer,
         },
         {
             path: '/startup',
             permission: 'startup.*',
             name: 'Startup',
+            accessKey: 'server_startup',
             component: StartupContainer,
         },
         {
             path: '/settings',
             permission: ['settings.*', 'file.sftp'],
             name: 'Settings',
+            accessKey: 'server_settings',
             component: SettingsContainer,
         },
         {
             path: '/activity',
             permission: 'activity.*',
             name: 'Activity',
+            accessKey: 'server_activity',
             component: ServerActivityLogContainer,
         },
     ],
