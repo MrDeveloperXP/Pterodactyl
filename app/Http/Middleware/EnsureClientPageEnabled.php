@@ -43,6 +43,14 @@ class EnsureClientPageEnabled
             default => null,
         };
 
+        if ($path === '/' && !PanelAccess::isEnabled($this->settings, 'dashboard')) {
+            foreach ([['servers', '/servers'], ['store', '/store'], ['account', '/account']] as [$key, $url]) {
+                if (PanelAccess::isEnabled($this->settings, $key)) {
+                    return redirect()->to($url);
+                }
+            }
+        }
+
         if ($page && !PanelAccess::isEnabled($this->settings, $page)) {
             abort(404);
         }

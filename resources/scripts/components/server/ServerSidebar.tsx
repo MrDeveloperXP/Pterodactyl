@@ -104,6 +104,7 @@ interface Route {
 export default ({ routes, to }: { routes: Route[]; to: (value: string, url?: boolean) => string }) => {
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
     const pages = useStoreState((state: ApplicationStore) => state.settings.data!.pages);
+    const homePath = pages.dashboard ? '/' : pages.servers ? '/servers' : pages.store ? '/store' : '/account';
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -136,7 +137,7 @@ export default ({ routes, to }: { routes: Route[]; to: (value: string, url?: boo
             <SidebarWrapper $open={mobileOpen}>
                 <div css={tw`flex items-center justify-between px-5 py-5`}>
                     <Link
-                        to={'/'}
+                        to={homePath}
                         css={tw`flex items-center gap-2 text-sm font-header font-medium text-neutral-400 hover:text-neutral-100 no-underline transition-colors duration-150`}
                         onClick={closeMobile}
                     >

@@ -75,6 +75,7 @@ export default () => {
     const name = useStoreState((state: ApplicationStore) => state.settings.data!.name);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
     const pages = useStoreState((state: ApplicationStore) => state.settings.data!.pages);
+    const homePath = pages.dashboard ? '/' : pages.servers ? '/servers' : pages.store ? '/store' : '/account';
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -94,7 +95,7 @@ export default () => {
                 <button onClick={() => setMobileOpen(true)} css={tw`text-neutral-300 text-xl mr-4`}>
                     <FontAwesomeIcon icon={faBars} />
                 </button>
-                <Link to={'/'} css={tw`text-lg font-header font-medium text-neutral-100 no-underline`}>
+                <Link to={homePath} css={tw`text-lg font-header font-medium text-neutral-100 no-underline`}>
                     {name}
                 </Link>
             </MobileHeader>
@@ -104,7 +105,7 @@ export default () => {
             <SidebarWrapper $open={mobileOpen}>
                 <div css={tw`flex items-center justify-between px-5 py-5`}>
                     <Link
-                        to={'/'}
+                        to={homePath}
                         css={tw`text-xl font-header font-medium text-neutral-100 no-underline`}
                         onClick={() => setMobileOpen(false)}
                     >

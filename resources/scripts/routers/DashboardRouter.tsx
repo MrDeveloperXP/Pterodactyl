@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Sidebar from '@/components/Sidebar';
 import DashboardHomeContainer from '@/components/dashboard/DashboardHomeContainer';
 import MyServersContainer from '@/components/dashboard/MyServersContainer';
@@ -15,6 +15,11 @@ import { useStoreState } from 'easy-peasy';
 export default () => {
     const location = useLocation();
     const pages = useStoreState((state: any) => state.settings.data!.pages);
+    const fallback = pages.servers ? '/servers' : pages.store ? '/store' : pages.account ? '/account' : null;
+
+    if (location.pathname === '/' && !pages.dashboard && fallback) {
+        return <Redirect to={fallback} />;
+    }
 
     return (
         <>
