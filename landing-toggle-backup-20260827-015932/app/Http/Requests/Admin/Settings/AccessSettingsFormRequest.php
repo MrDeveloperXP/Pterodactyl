@@ -12,7 +12,6 @@ class AccessSettingsFormRequest extends AdminFormRequest
         $rules = [
             'auth:login_enabled' => 'required|in:true,false',
             'auth:signup_enabled' => 'required|in:true,false',
-            'auth:landing_enabled' => 'required|in:true,false',
         ];
 
         foreach (PanelAccess::PAGES as $key => $label) {

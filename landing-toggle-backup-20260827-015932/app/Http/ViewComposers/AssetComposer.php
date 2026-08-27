@@ -35,7 +35,6 @@ class AssetComposer
             'auth' => [
                 'loginEnabled' => PanelAccess::isEnabled($this->settings, 'login'),
                 'signupEnabled' => PanelAccess::isEnabled($this->settings, 'signup'),
-                'landingEnabled' => PanelAccess::isEnabled($this->settings, 'landing'),
             ],
             'pages' => PanelAccess::all($this->settings),
         ]);

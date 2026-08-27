@@ -10,7 +10,6 @@ export interface SiteSettings {
     auth: {
         loginEnabled: boolean;
         signupEnabled: boolean;
-        landingEnabled: boolean;
     };
     pages: Record<string, boolean>;
 }

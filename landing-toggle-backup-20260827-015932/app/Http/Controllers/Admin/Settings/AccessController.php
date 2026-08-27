@@ -25,7 +25,6 @@ class AccessController extends Controller
             'enabledPages' => PanelAccess::all($this->settings),
             'loginEnabled' => PanelAccess::isEnabled($this->settings, 'login'),
             'signupEnabled' => PanelAccess::isEnabled($this->settings, 'signup'),
-            'landingEnabled' => PanelAccess::isEnabled($this->settings, 'landing'),
         ]);
     }
 
@@ -34,7 +33,6 @@ class AccessController extends Controller
         $data = $request->validated();
         $this->settings->set(PanelAccess::settingKey('login'), $data['auth:login_enabled']);
         $this->settings->set(PanelAccess::settingKey('signup'), $data['auth:signup_enabled']);
-        $this->settings->set(PanelAccess::settingKey('landing'), $data['auth:landing_enabled']);
 
         foreach (PanelAccess::PAGES as $key => $label) {
             $this->settings->set(PanelAccess::settingKey($key), $data['page:' . $key]);

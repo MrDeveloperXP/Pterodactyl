@@ -21,7 +21,7 @@
                 <div class="box">
                     <div class="box-header with-border"><h3 class="box-title">Authentication</h3></div>
                     <div class="box-body">
-                        @foreach(['auth:login_enabled' => ['Login', $loginEnabled, 'Allow existing users to sign in.'], 'auth:signup_enabled' => ['Signup', $signupEnabled, 'Allow visitors to create new accounts.'], 'auth:landing_enabled' => ['Landing Page', $landingEnabled, 'Show the public marketing/landing page to guests. When disabled, visiting the site sends guests straight to the login page instead.']] as $key => [$label, $enabled, $description])
+                        @foreach(['auth:login_enabled' => ['Login', $loginEnabled, 'Allow existing users to sign in.'], 'auth:signup_enabled' => ['Signup', $signupEnabled, 'Allow visitors to create new accounts.']] as $key => [$label, $enabled, $description])
                             <div class="form-group">
                                 <label>{{ $label }}</label>
                                 <input type="hidden" name="{{ $key }}" value="false">

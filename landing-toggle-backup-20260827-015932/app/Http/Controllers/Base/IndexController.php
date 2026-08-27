@@ -6,34 +6,24 @@ use Illuminate\View\View;
 use Pterodactyl\Models\Plan;
 use Pterodactyl\Models\ResourcePrice;
 use Illuminate\View\Factory as ViewFactory;
-use Illuminate\Http\RedirectResponse;
 use Pterodactyl\Http\Controllers\Controller;
-use Pterodactyl\Support\PanelAccess;
 use Pterodactyl\Contracts\Repository\ServerRepositoryInterface;
-use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
 class IndexController extends Controller
 {
     public function __construct(
         protected ServerRepositoryInterface $repository,
         protected ViewFactory $view,
-        protected SettingsRepositoryInterface $settings,
     ) {
     }
 
     /**
      * Returns the public landing page for guests, or the panel dashboard
-     * (React SPA) for authenticated users. If the landing page has been
-     * disabled by an admin, guests are redirected straight to the login
-     * page instead of seeing the marketing page.
+     * (React SPA) for authenticated users.
      */
-    public function index(): View|RedirectResponse
+    public function index(): View
     {
         if (!auth()->check()) {
-            if (!PanelAccess::isEnabled($this->settings, 'landing')) {
-                return redirect()->route('auth.login');
-            }
-
             return view('landing.index', [
                 'plans' => Plan::where('is_active', true)
                     ->orderBy('sort_order')
