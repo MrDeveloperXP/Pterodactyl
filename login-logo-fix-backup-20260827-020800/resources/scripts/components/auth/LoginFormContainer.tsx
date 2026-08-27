@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 import { breakpoint } from '@/theme';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import tw from 'twin.macro';
-import PterodactylLogo from '@/assets/images/pterodactyl.svg';
 
 type Props = React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> & {
     title?: string;
@@ -26,7 +25,7 @@ const Container = styled.div`
 export default forwardRef<HTMLFormElement, Props>(({ title, ...props }, ref) => (
     <Container>
         <div css={tw`flex flex-col items-center mb-6 select-none`}>
-            <img src={PterodactylLogo} css={tw`block w-14 md:w-16 mb-3`} />
+            <img src={'/assets/svgs/pterodactyl.svg'} css={tw`block w-14 md:w-16 mb-3`} />
             {title && <h2 css={tw`text-2xl text-center text-neutral-100 font-medium`}>{title}</h2>}
         </div>
         <FlashMessageRender css={tw`mb-2 px-1`} />
